@@ -20,7 +20,7 @@ def main_screen():
     save_text = Label(root, text="c:\\").grid(column=1, row=1)
 
     download_button = Button(root, text="download", command=download_vid).grid(column=1, row=2)
-
+    root.mainloop()
 
 # grabs filepath and updates the label to display the new filepath.
 def save_location():
