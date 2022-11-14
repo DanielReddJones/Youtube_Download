@@ -5,7 +5,8 @@ from tkinter import filedialog
 root = Tk()
 root.title("video download screen")
 url_label = Label(root, text="URL: ").grid(column=0, row=0)
-text_box = Text(root, height=1, width=30).grid(column=1, row=0)
+text_box = Text(root, height=1, width=30)
+text_box.grid(column=1, row=0)
 
 def main():
     main_screen()
@@ -34,8 +35,8 @@ def download_vid():
     #TODO: re-add try/except when downloading works.
     #try:
     yt = YouTube(text_box.get('1.0', 'end'))
-    mp3Files = yt.filter('mp3')
-    my_vid = youtube.streams.first()
+   # mp3Files = yt.filter('mp3')
+    my_vid = YouTube.streams.first()
     my_vid.download(filepath)
 
 
