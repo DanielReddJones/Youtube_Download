@@ -2,7 +2,7 @@
 # Author: Daniel Jones
 # Interpreter: Python 11
 # Operating System: Windows 10/Pop!_OS Linux
-# Last edited: 9:19 AM 11/14/2022
+# Last edited: 9:19 AM 12/4/2022
 # Editor: Pycharm/Vim
 ##################################################
 
@@ -10,6 +10,7 @@ from pytube import *
 from tkinter import *
 from tkinter import filedialog
 from pytube.exceptions import *
+import os
 
 # global TK fields
 root = Tk()
@@ -33,7 +34,7 @@ def main_screen():
     save_text = Label(root, text="c:\\")
     save_text.grid(column=1, row=1)
 
-    download_button = Button(root, text="download", command=download_vid)
+    download_button = Button(root, text="download", command=download_audio)
     download_button.grid(column=1, row=2)
     root.mainloop()
 
@@ -47,13 +48,16 @@ def save_location():
     save_text.grid(column=1, row=1)
 
 
-# placeholder for now. Will update later to download the videos to the filepath.
-def download_vid():
+# downloads audio to given filepath
+def download_audio():
 
     try:
         yt_link = text_box.get('1.0', 'end')
         yt = YouTube(yt_link).streams.filter(only_audio=True)
-        yt[0].download(filepath)
+        out_file = yt[0].download(filepath)
+        base, ext = os.path.splitext(out_file)
+        new_file = base + '.mp3'
+        os.rename(out_file, new_file)
 
     except NameError:
         print("select a filepath, and insert a YouTube URL in the URL box.")
