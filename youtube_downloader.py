@@ -60,11 +60,46 @@ def download_audio():
         os.rename(out_file, new_file)
 
     except NameError:
-        print("select a filepath, and insert a YouTube URL in the URL box.")
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("Name Error")
+        errlabel = Label(err, text="select a filepath,\n and insert a YouTube URL \nin the URL box.").grid(column=0, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=0, row=1)
+        err.mainloop()
     except RegexMatchError:
-        print("invalid link.")
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("Video Unavailable")
+        errlabel = Label(err, text="invalid link.").grid(column=0, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=0, row=1)
+        err.mainloop()
     except VideoUnavailable:
-        print("video unavailable")
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("Video Unavailable")
+        errlabel = Label(err, text="video unavailable").grid(column=1, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=1, row=1)
+        err.mainloop()
+    except PermissionError:
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("permissions Error")
+        errlabel = Label(err, text="invalid path. \nSave somewhere else.").grid(column=0, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=0, row=1)
+        err.mainloop()
+    except FileExistsError:
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("permissions Error")
+        errlabel = Label(err, text="File already exists!").grid(column=0, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=0, row=1)
+        err.mainloop()
+
 
 if __name__ == "__main__":
     main()
