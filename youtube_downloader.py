@@ -2,8 +2,8 @@
 # Author: Daniel Jones
 # Interpreter: Python 11
 # Operating System: Windows 10/Pop!_OS Linux
-# Last edited: 9:19 AM 12/4/2022
-# Editor: Pycharm/Vim
+# Last edited: 2 PM 2/24/2023
+# Editor: IDLE/Vim
 ##################################################
 
 
@@ -32,11 +32,14 @@ def main_screen():
     save_label.grid(column=0, row=1)
     save_button = Button(root, text="...", command=save_location)
     save_button.grid(column=2, row=1)
-    save_text = Label(root, text="c:\\")
+    save_text = Label(root, text="")
     save_text.grid(column=1, row=1)
 
-    download_button = Button(root, text="download", command=download_audio)
-    download_button.grid(column=1, row=2)
+    download_aud_button = Button(root, text="download audio", command=download_audio)
+    download_aud_button.grid(column=1, row=2)
+
+    download_vid_button = Button(root, text="download video", command=download_video)
+    download_vid_button.grid(column=1, row=3)
     root.mainloop()
 
 
@@ -49,6 +52,58 @@ def save_location():
     save_text.grid(column=1, row=1)
 
 
+def download_video():
+    try:
+        yt_link = text_box.get('1.0', 'end')
+        yt = YouTube(yt_link)
+        out_file = yt.streams.get_highest_resolution()
+        out_file.download(filepath)
+
+
+
+        
+    except NameError:
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("Name Error")
+        errlabel = Label(err, text="select a filepath,\n and insert a YouTube URL \nin the URL box.").grid(column=0, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=0, row=1)
+        err.mainloop()
+    except RegexMatchError:
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("Video Unavailable")
+        errlabel = Label(err, text="invalid link.").grid(column=0, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=0, row=1)
+        err.mainloop()
+    except VideoUnavailable:
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("Video Unavailable")
+        errlabel = Label(err, text="video unavailable").grid(column=1, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=1, row=1)
+        err.mainloop()
+    except PermissionError:
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("permissions Error")
+        errlabel = Label(err, text="invalid path. \nSave somewhere else.").grid(column=0, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=0, row=1)
+        err.mainloop()
+    except FileExistsError:
+        err = Tk()
+        err.geometry("150x100")
+        err.anchor("center")
+        err.title("permissions Error")
+        errlabel = Label(err, text="File already exists!").grid(column=0, row=0)
+        erbutt = Button(err, text="close", command=err.destroy).grid(column=0, row=1)
+        err.mainloop()
+
+        
 # downloads audio to given filepath
 def download_audio():
 
